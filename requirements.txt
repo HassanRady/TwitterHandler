@@ -3,4 +3,4 @@ asyncio
 kafka-python
 tweepy
 oauthlib
-python-dotenvpip 
+python-dotenv
