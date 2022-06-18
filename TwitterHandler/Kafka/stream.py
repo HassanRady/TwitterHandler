@@ -67,6 +67,8 @@ class Streamer:
         self.streamer.add_rules(StreamRule(query))
         self.streamer.filter(threaded=True, )
 
+    def stop_stream(self):
+        self.streamer.disconnect()
 
 if __name__ == '__main__':
     # producer = KafkaProducer(bootstrap_servers="localhost:9092")
@@ -83,4 +85,7 @@ if __name__ == '__main__':
     streamer= Streamer()
     streamer.start_stream('Trump')
     print('Streaming tweets...')
+    import time
+    time.sleep(5)
+    streamer.stop_stream()
 
