@@ -1,2 +1,2 @@
-include TwitterHandle/kafka
-include TwitterHandle/VERSION
+include TwitterHandler/kafka
+include TwitterHandler/VERSION
