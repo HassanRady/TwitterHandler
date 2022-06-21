@@ -27,6 +27,10 @@ class TweetsStreamer(StreamingClient):
             print(e)
         return True
 
+    def on_disconnect(self):
+        # self.thread.join()
+        pass
+
     def on_error(self, status_code):
         print(status_code)
 
@@ -62,30 +66,22 @@ class Streamer:
     def __init__(self, ):
         producer = KafkaProducer(bootstrap_servers="localhost:9092")
         self.streamer = TweetsStreamer(producer, bearer_token=bearer_token)
+        self.thread = None
+
+    def delete_rules(self):
+        rules = self.streamer.get_rules().data
+        rules_list = []
+        for rule in rules:
+            rules_list.append(rule.id)
+        self.streamer.delete_rules(rules_list)
 
     def start_stream(self, query):
         self.streamer.add_rules(StreamRule(query))
-        self.streamer.filter(threaded=True, )
+        self.thread = self.streamer.filter(threaded=True, )
 
     def stop_stream(self):
         self.streamer.disconnect()
+        self.thread.join()
+        self.delete_rules()
 
-if __name__ == '__main__':
-    # producer = KafkaProducer(bootstrap_servers="localhost:9092")
-    # streamer = TweetsStreamer(producer, bearer_token=bearer_token)
-    # streamer.add_rules(StreamRule("Trump"))
-    # streamer.filter(threaded=True)
-    # print('Streaming tweets...')
-
-    # at = AsyncTweets()
-    # res = at.get_recent_tweets_count('Trump')
-    # asyncio.run(res)
-    # print('Streaming tweets...')
-    # print(res)
-    streamer= Streamer()
-    streamer.start_stream('Trump')
-    print('Streaming tweets...')
-    import time
-    time.sleep(5)
-    streamer.stop_stream()
 
