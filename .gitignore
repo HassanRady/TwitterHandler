@@ -195,4 +195,5 @@ test.py
 logs.*
 checkpoint/
 test2.py
+app.py
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
