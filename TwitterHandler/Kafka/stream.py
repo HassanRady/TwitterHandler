@@ -76,8 +76,9 @@ class Streamer:
         self.streamer.delete_rules(rules_list)
 
     def start_stream(self, query):
-        self.streamer.add_rules(StreamRule(query))
-        self.thread = self.streamer.filter(threaded=True, )
+        rule = query + " lang:en" 
+        self.streamer.add_rules([StreamRule(rule), ], dry_run=False)
+        self.thread = self.streamer.filter(threaded=True, tweet_fields=['text', 'author_id', ])
 
     def stop_stream(self):
         self.streamer.disconnect()
