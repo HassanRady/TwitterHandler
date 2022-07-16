@@ -1,7 +1,0 @@
-aiohttp
-asyncio
-kafka-python
-tweepy
-oauthlib
-python-dotenv
-async_lru
