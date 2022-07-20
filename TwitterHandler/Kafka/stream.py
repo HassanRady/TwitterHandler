@@ -7,9 +7,6 @@ load_dotenv(dotenv_path)
 from tweepy import StreamingClient, StreamRule
 from tweepy.asynchronous import AsyncStreamingClient, AsyncClient
 from kafka import KafkaProducer
-import asyncio
-import aiohttp
-import tweepy
 
 bearer_token = os.environ['BEARER_TOKEN']
 
