@@ -8,7 +8,10 @@ from tweepy import StreamingClient, StreamRule
 from tweepy.asynchronous import AsyncStreamingClient, AsyncClient
 from kafka import KafkaProducer
 
-bearer_token = os.environ['BEARER_TOKEN']
+BEARER_TOKEN = os.environ['BEARER_TOKEN']
+KAFKA_HOST = os.environ['KAFKA_HOST']
+KAFKA_PORT = os.environ['KAFKA_PORT']
+KAFKA_TOPIC = os.environ['KAFKA_TOPIC']
 
 
 class TweetsStreamer(StreamingClient):
@@ -19,7 +22,7 @@ class TweetsStreamer(StreamingClient):
     def on_data(self, raw_data):
         try:
             self.producer.send(
-                'tweets_stream', raw_data)
+                KAFKA_TOPIC, raw_data)
         except BaseException as e:
             print(e)
         return True
@@ -52,7 +55,7 @@ class AsyncTweetsStreamer(AsyncStreamingClient):
 
 class AsyncTweets:
     def __init__(self,):
-        self.async_client = AsyncClient(bearer_token=bearer_token)
+        self.async_client = AsyncClient(BEARER_TOKEN=BEARER_TOKEN)
 
     def get_recent_tweets_count(self, query):
         tweets = self.async_client.get_recent_tweets_count(query=query)
@@ -61,8 +64,8 @@ class AsyncTweets:
     
 class Streamer:
     def __init__(self, ):
-        producer = KafkaProducer(bootstrap_servers="localhost:9092")
-        self.streamer = TweetsStreamer(producer, bearer_token=bearer_token)
+        producer = KafkaProducer(bootstrap_servers=f"{KAFKA_HOST}:{KAFKA_PORT}")
+        self.streamer = TweetsStreamer(producer, BEARER_TOKEN=BEARER_TOKEN)
         self.thread = None
 
     def delete_rules(self):
