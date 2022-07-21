@@ -65,7 +65,7 @@ class AsyncTweets:
 class Streamer:
     def __init__(self, ):
         producer = KafkaProducer(bootstrap_servers=f"{KAFKA_HOST}:{KAFKA_PORT}")
-        self.streamer = TweetsStreamer(producer, BEARER_TOKEN=BEARER_TOKEN)
+        self.streamer = TweetsStreamer(producer, bearer_token=BEARER_TOKEN)
         self.thread = None
 
     def delete_rules(self):
