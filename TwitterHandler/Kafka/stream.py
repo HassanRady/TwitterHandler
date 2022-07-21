@@ -34,34 +34,6 @@ class TweetsStreamer(StreamingClient):
     def on_error(self, status_code):
         print(status_code)
 
-
-
-class AsyncTweetsStreamer(AsyncStreamingClient):
-    def __init__(self, producer, **kwargs):
-        super().__init__(**kwargs)
-        self.producer = producer
-
-    async def on_data(self, raw_data):
-        try:
-            self.producer.send(
-                'tweets_stream', raw_data)
-        except BaseException as e:
-            print(e)
-        return True
-
-    async def on_error(self, status_code):
-        print(status_code)
-
-
-class AsyncTweets:
-    def __init__(self,):
-        self.async_client = AsyncClient(BEARER_TOKEN=BEARER_TOKEN)
-
-    def get_recent_tweets_count(self, query):
-        tweets = self.async_client.get_recent_tweets_count(query=query)
-        return tweets
-
-    
 class Streamer:
     def __init__(self, ):
         producer = KafkaProducer(bootstrap_servers=f"{KAFKA_HOST}:{KAFKA_PORT}")
