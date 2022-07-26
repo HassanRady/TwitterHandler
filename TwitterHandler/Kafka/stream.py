@@ -5,7 +5,6 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 from tweepy import StreamingClient, StreamRule
-from tweepy.asynchronous import AsyncStreamingClient, AsyncClient
 from kafka import KafkaProducer
 
 BEARER_TOKEN = os.environ['BEARER_TOKEN']

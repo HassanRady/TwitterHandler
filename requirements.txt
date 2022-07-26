@@ -1,7 +1,3 @@
-aiohttp
-asyncio
-kafka-python
-tweepy
-oauthlib
-python-dotenv
-async_lru
+kafka-python==2.0.2
+tweepy==4.10.0
+python-dotenv==0.20.0
